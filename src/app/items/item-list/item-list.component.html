@@ -1,8 +1,9 @@
-<mat-accordion>
-  <mat-expansion-panel>
+<mat-accordion multi="true" *ngIf="items.length > 0">
+  <mat-expansion-panel *ngFor="let item of items">
     <mat-expansion-panel-header>
-Titulo artigo
+      {{ item.title }}
     </mat-expansion-panel-header>
-<p>descrição artigo</p>
+    <p>{{ item.content }}</p>
   </mat-expansion-panel>
 </mat-accordion>
+<p *ngIf="items.length <= 0">Não existem leilões ativos.</p>
