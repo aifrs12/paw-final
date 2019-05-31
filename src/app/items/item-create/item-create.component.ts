@@ -5,8 +5,11 @@ import { Component } from '@angular/core';
   templateUrl: './item-create.component.html'
 })
 export class ItemCreateComponent {
-  onAddItem(){
-    alert('Artigo adicionado com sucesso!');
+  newItem = 'NO CONTENT';
+
+  onAddItem(itemInput: HTMLTextAreaElement){
+    console.dir(itemInput);
+    this.newItem = 'Artigo anunciado.';
   }
 
 }

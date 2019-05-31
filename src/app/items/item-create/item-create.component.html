@@ -1,3 +1,4 @@
-<textarea rows="6"></textarea>
+<textarea rows="6" [value]="newItem" #itemInput></textarea>
 <hr>
-<button (click)="onAddItem()">Publicar Artigo</button>
+<button (click)="onAddItem(itemInput)">Publicar Artigo</button>
+<p>{{ newItem }}</p>
