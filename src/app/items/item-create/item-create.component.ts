@@ -5,5 +5,8 @@ import { Component } from '@angular/core';
   templateUrl: './item-create.component.html'
 })
 export class ItemCreateComponent {
+  onAddItem(){
+    alert('Artigo adicionado com sucesso!');
+  }
 
 }
