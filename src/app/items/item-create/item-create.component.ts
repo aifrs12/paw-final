@@ -1,4 +1,4 @@
-import { Component, EventEmitter } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
   selector: 'app-item-create',
@@ -8,13 +8,13 @@ import { Component, EventEmitter } from '@angular/core';
 export class ItemCreateComponent {
   enteredTitle = '';
   enteredContent = '';
-  itemCreated = new EventEmitter();
+  @Output() itemCreated = new EventEmitter();
 
   onAddItem(itemInput: HTMLTextAreaElement){
     const item = {
       title: this.enteredTitle,
       content: this.enteredContent
-
     };
+    this.itemCreated.emit(item);
   }
 }
