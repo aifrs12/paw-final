@@ -1,9 +1,13 @@
 <mat-card>
-  <mat-form-field>
-    <input matInput type="text" [(ngModel)]="enteredTitle">
-  </mat-form-field>
-  <mat-form-field>
-    <textarea matInput rows="6" [(ngModel)]="enteredContent"></textarea>
-  </mat-form-field>
-  <button mat-raised-button color="primary" (click)="onAddItem()">Criar Leilão</button>
+  <form (submit)="onAddItem(itemForm)" #itemForm="ngForm">
+    <mat-form-field>
+      <input matInput type="text" name="title" ngModel required minlength="3" #title="ngModel">
+      <mat-error *ngIf="title.invalid">O campo não pode estar vazio.</mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea matInput rows="6" name="content" ngModel required #content="ngModel"></textarea>
+      <mat-error *ngIf="content.invalid">O campo não pode estar vazio.</mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submite">Criar Leilão</button>
+  </form>
 </mat-card>

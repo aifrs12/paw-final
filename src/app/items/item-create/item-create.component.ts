@@ -1,4 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
+
+import { Item } from '../item.model';
 
 @Component({
   selector: 'app-item-create',
@@ -8,12 +11,15 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class ItemCreateComponent {
   enteredTitle = '';
   enteredContent = '';
-  @Output() itemCreated = new EventEmitter();
+  @Output() itemCreated = new EventEmitter<Item>();
 
-  onAddItem(itemInput: HTMLTextAreaElement){
+  onAddItem(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
     const item = {
-      title: this.enteredTitle,
-      content: this.enteredContent
+      title: form.value.title,
+      content: form.value.content
     };
     this.itemCreated.emit(item);
   }
