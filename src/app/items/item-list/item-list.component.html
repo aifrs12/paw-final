@@ -4,6 +4,10 @@
       {{ item.title }}
     </mat-expansion-panel-header>
     <p>{{ item.content }}</p>
+    <mat-action-row>
+      <button mat-button>EDITAR</button>
+      <button mat-button>ELIMINAR</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <p class="info-text mat-body-1" *ngIf="items.length <= 0">Não existem leilões ativos.</p>
