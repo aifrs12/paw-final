@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 
 import { Item } from '../item.model';
+import { ItemsService } from '../items.service';
 
 @Component({
   selector: 'app-item-list',
@@ -16,5 +17,7 @@ export class ItemListComponent {
   */
 
   @Input() items: Item[] = [];
+
+  constructor(public itemsService: ItemsService) {}
 
 }
