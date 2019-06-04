@@ -1,7 +1,8 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { Item } from '../item.model';
+import { ItemsService } from '../items.service';
 
 @Component({
   selector: 'app-item-create',
@@ -11,16 +12,13 @@ import { Item } from '../item.model';
 export class ItemCreateComponent {
   enteredTitle = '';
   enteredContent = '';
-  @Output() itemCreated = new EventEmitter<Item>();
+
+constructor(public itemsService: ItemsService) {}
 
   onAddItem(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    const item = {
-      title: form.value.title,
-      content: form.value.content
-    };
-    this.itemCreated.emit(item);
+    this.itemsService.addItems(form.value.title, form.value.content);
   }
 }
