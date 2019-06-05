@@ -46,7 +46,9 @@ export class ItemsService {
   deleteItem(itemId: string) {
     this.http.delete('http://localhost:3000/api/items/' + itemId)
     .subscribe(() => {
-      console.log('Deleted!');
-    })
+      const updatedItems = this.items.filter(item => item.id !== itemId);
+      this.items = updatedItems;
+      this.itemsUpdated.next([...this.items]);
+    });
   }
 }
