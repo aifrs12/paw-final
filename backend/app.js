@@ -28,9 +28,11 @@ app.post('/api/items', (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  item.save();
-  res.status(201).json({
-    message: 'Leilão add sucess'
+  item.save().then(createdItem => {
+    res.status(201).json({
+      message: 'Leilão add sucess',
+      itemId: createdItem._id
+    });
   });
 });
 
