@@ -42,4 +42,11 @@ export class ItemsService {
       this.itemsUpdated.next([...this.items]);
     });
   }
+
+  deleteItem(itemId: string) {
+    this.http.delete('http://localhost:3000/api/items/' + itemId)
+    .subscribe(() => {
+      console.log('Deleted!');
+    })
+  }
 }

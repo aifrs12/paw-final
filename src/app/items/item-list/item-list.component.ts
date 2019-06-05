@@ -30,6 +30,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDelete(itemId: string) {
+    this.itemsService.deleteItem(itemId);
+  }
+
   ngOnDestroy() {
     this.itemsSub.unsubscribe();
   }

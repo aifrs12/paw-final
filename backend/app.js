@@ -43,4 +43,11 @@ app.get('/api/items', (req, res, next) => {
   });
 });
 
+app.delete('/api/items/:id', (req, res, next) => {
+  Item.deleteOne({_id: req.params.id}).then(result => {
+    console.log(result);
+    res.status(200).json({ message: 'Leilão apagado' });
+  });
+});
+
 module.exports = app;
