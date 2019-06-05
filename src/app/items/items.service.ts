@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs'
+import { HttpClient } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 import { Item } from './item.model';
 
@@ -8,8 +9,14 @@ export class ItemsService {
   private items: Item[] = [];
   private itemsUpdated = new Subject<Item[]>();
 
+  constructor(private http: HttpClient) {}
+
   getItems() {
-    return [...this.items];
+    this.http.get<{message: string, items: Item[]}>('http://localhost:3000/api/items')
+    .subscribe((itemData) => {
+      this.items = itemData.items;
+      this.itemsUpdated.next([...this.items]);
+    });
   }
 
   getItemUpdateListener() {
@@ -17,7 +24,7 @@ export class ItemsService {
   }
 
   addItems(title: string, content: string) {
-    const item: Item = { title: title, content: content};
+    const item: Item = {id: null, title: title, content: content};
     this.items.push(item);
     this.itemsUpdated.next([...this.items]);
   }
