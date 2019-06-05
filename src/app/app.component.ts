@@ -10,7 +10,7 @@ import { Item } from './items/item.model';
 export class AppComponent {
   storedItems: Item[] = [];
 
-  onItemAdded(item){
+  onItemAdded(item) {
     this.storedItems.push(item);
   }
 }
