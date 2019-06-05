@@ -1,6 +1,6 @@
 const mongoose= require('mongoose');
 
-const itemSchema = mongoose = mongoose.Shema({
+const itemSchema = mongoose.Shema({
   title: {String, required: true},
   content: {String, required: true},
 });

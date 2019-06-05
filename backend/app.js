@@ -1,10 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const Item = required('./models/item');
-
-
-
 
 
 
