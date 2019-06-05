@@ -1,6 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 
+const Item = required('./models/item');
+
+
+
+
+
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -13,7 +20,11 @@ app.use((req, res, next) => {
 });
 
 app.post('/api/items', (req, res, next) => {
-  const item = req.body;
+  const item = new Item({
+    title: req.body.title,
+    content: req.body.content
+
+  });
   console.log(item);
   res.status(201).json({
     message: 'Leilão add sucess'
