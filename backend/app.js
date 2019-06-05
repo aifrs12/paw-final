@@ -3,11 +3,6 @@ const bodyParser = require('body-parser');
 
 const Item = required('./models/item');
 
-
-
-
-
-
 const app = express();
 
 app.use(bodyParser.json());
