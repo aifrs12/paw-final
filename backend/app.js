@@ -1,15 +1,26 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 
 const app = express();
 
+app.use(bodyParser.json());
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Header', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE, OPTIONS');
   next();
 });
 
-app.use('/api/items', (req, res, next) => {
+app.post('/api/items', (req, res, next) => {
+  const item = req.body;
+  console.log(item);
+  res.status(201).json({
+    message: 'Leilão add sucess'
+  });
+});
+
+app.get('/api/items', (req, res, next) => {
   const items = [
      {
        id: '123456',
