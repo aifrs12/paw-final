@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 
+import { map } from 'rxjs/operators';
+
 import { Item } from './item.model';
 
 @Injectable({providedIn: 'root'})
@@ -12,9 +14,17 @@ export class ItemsService {
   constructor(private http: HttpClient) {}
 
   getItems() {
-    this.http.get<{message: string, items: Item[]}>('http://localhost:3000/api/items')
-    .subscribe((itemData) => {
-      this.items = itemData.items;
+    this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items'
+    )
+    .pipe(map((itemData) => {
+      return itemData.items.map(item => {
+        return {
+          title: item.title, content: item.content, id: item._id
+        };
+      });
+    }))
+    .subscribe((tansformedItems) => {
+      this.items = tansformedItems;
       this.itemsUpdated.next([...this.items]);
     });
   }
