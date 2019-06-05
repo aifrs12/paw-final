@@ -6,7 +6,7 @@ const Item = require('./models/item');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://Daniel:b2XBAvvZzgC7be0x@cluster0-wxo4k.mongodb.net/test?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://Daniel:b2XBAvvZzgC7be0x@cluster0-wxo4k.mongodb.net/paw?retryWrites=true&w=majority')
 .then(() => {
   console.log('Connected to database!');
 })
@@ -27,9 +27,8 @@ app.post('/api/items', (req, res, next) => {
   const item = new Item({
     title: req.body.title,
     content: req.body.content
-
   });
-  console.log(item);
+  item.save();
   res.status(201).json({
     message: 'Leilão add sucess'
   });
