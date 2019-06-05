@@ -6,7 +6,7 @@ const Item = require('./models/item');
 
 const app = express();
 
-mongoose.connect('mongodb+srv://Daniel:b2XBAvvZzgC7be0x@cluster0-wxo4k.mongodb.net/paw?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://admin:qApDe8F4tiWPc7WZ@cluster0-uvdxy.mongodb.net/paw?retryWrites=true&w=majority')
 .then(() => {
   console.log('Connected to database!');
 })
