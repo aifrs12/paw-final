@@ -34,7 +34,7 @@ export class ItemsService {
   }
 
   addItems(title: string, content: string) {
-    const item: Item = { id: null, title: title, content: content };
+    const item: Item = { id: null, title, content };
     this.http.post<{message: string, itemId: string}>('http://localhost:3000/api/items', item)
     .subscribe((responseData) => {
       const id = responseData.itemId;
