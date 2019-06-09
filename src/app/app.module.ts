@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ItemCreateComponent } from './items/item-create/item-create.component';
 import { ItemListComponent } from './items/item-list/item-list.component';
 import { HeaderComponent } from './header/header.component';
-import { AppRoutingModule } from './app-routing.module';
 
 
 @NgModule({
@@ -21,7 +20,6 @@ import { AppRoutingModule } from './app-routing.module';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     MatInputModule,
