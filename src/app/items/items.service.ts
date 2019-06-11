@@ -33,6 +33,10 @@ export class ItemsService {
     return this.itemsUpdated.asObservable();
   }
 
+  getItem(id: string) {
+    return{...this.items.find(p => p.id === id)};
+  }
+
   addItems(title: string, content: string) {
     const item: Item = { id: null, title, content };
     this.http.post<{message: string, itemId: string}>('http://localhost:3000/api/items', item)
