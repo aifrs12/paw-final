@@ -1,11 +1,11 @@
 <mat-card>
   <form (submit)="onAddItem(itemForm)" #itemForm="ngForm">
     <mat-form-field>
-      <input matInput type="text" name="title" ngModel required minlength="3" #title="ngModel" placeholder="Titulo">
+      <input matInput type="text" name="title" [ngModel]="item.title" required minlength="3" #title="ngModel" placeholder="Titulo">
       <mat-error *ngIf="title.invalid">O campo não pode estar vazio.</mat-error>
     </mat-form-field>
     <mat-form-field>
-      <textarea matInput rows="6" name="content" ngModel required #content="ngModel" placeholder="Descrição"></textarea>
+      <textarea matInput rows="6" name="content" [ngModel]="item.content" required #content="ngModel" placeholder="Descrição"></textarea>
       <mat-error *ngIf="content.invalid">O campo não pode estar vazio.</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary" type="submit">Criar Leilão</button>
