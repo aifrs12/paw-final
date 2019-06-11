@@ -10,6 +10,7 @@ import { ItemCreateComponent } from './items/item-create/item-create.component';
 import { ItemListComponent } from './items/item-list/item-list.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
+import { LoginComponent } from './auth/login/login.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { AppRoutingModule } from './app-routing.module';
     AppComponent,
     ItemCreateComponent,
     ItemListComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
