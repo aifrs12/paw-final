@@ -7,7 +7,7 @@ import { ItemListComponent } from './items/item-list/item-list.component';
 const routes: Routes = [
   { path: '', component: ItemListComponent},
   { path: 'create' , component: ItemCreateComponent},
-  { path: 'edit/:leilaoId' , component: ItemCreateComponent},
+  { path: 'edit/:itemId' , component: ItemCreateComponent},
 ];
 
 @NgModule({
