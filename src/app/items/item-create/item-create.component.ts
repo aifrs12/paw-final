@@ -13,20 +13,20 @@ export class ItemCreateComponent implements OnInit {
   enteredTitle = '';
   enteredContent = '';
   private mode = 'create';
-  private leilaoId: string;
+  private itemId: string;
   private item: Item;
 
 constructor(public itemsService: ItemsService, public route: ActivatedRoute) {}
 
 ngOnInit() {
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
-    if (paramMap.has('leilaoId')) {
+    if (paramMap.has('itemId')) {
         this.mode = 'edit';
-        this.leilaoId = paramMap.get('leilaoId');
-        this.item = this.itemsService.getItem(this.leilaoId);
+        this.itemId = paramMap.get('itemId');
+        this.item = this.itemsService.getItem(this.itemId);
     } else {
         this.mode = 'create';
-        this.leilaoId = null;
+        this.itemId = null;
     }
   });
 }
