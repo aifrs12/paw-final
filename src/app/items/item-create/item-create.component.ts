@@ -12,9 +12,9 @@ import { ItemsService } from '../items.service';
 export class ItemCreateComponent implements OnInit {
   enteredTitle = '';
   enteredContent = '';
+  item: Item;
   private mode = 'create';
   private itemId: string;
-  private item: Item;
 
 constructor(public itemsService: ItemsService, public route: ActivatedRoute) {}
 
