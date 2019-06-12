@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Item } from './item.model';
+import { Content } from '@angular/compiler/src/render3/r3_ast';
 
 @Injectable({providedIn: 'root'})
 export class ItemsService {
@@ -14,7 +15,7 @@ export class ItemsService {
   constructor(private http: HttpClient) {}
 
   getItems() {
-    this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items'
+    this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items/'
     )
     .pipe(map((itemData) => {
       return itemData.items.map(item => {
@@ -34,18 +35,31 @@ export class ItemsService {
   }
 
   getItem(id: string) {
-    return{...this.items.find(p => p.id === id)};
+    return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/items/' + id);
   }
 
   addItems(title: string, content: string) {
     const item: Item = { id: null, title, content };
-    this.http.post<{message: string, itemId: string}>('http://localhost:3000/api/items', item)
+    this.http.post<{message: string, itemId: string}>('http://localhost:3000/api/items/', item)
     .subscribe((responseData) => {
       const id = responseData.itemId;
       item.id = id;
       this.items.push(item);
       this.itemsUpdated.next([...this.items]);
     });
+  }
+
+  updateItem(id: string, title: string, content: string) {
+    const item: Item = { id, title, content };
+    this.http
+      .put('http://localhost:3000/api/items/' + id, item)
+      .subscribe(response => {
+        const updatedItems = [...this.items];
+        const oldItemIndex = updatedItems.findIndex(i => i.id === item.id);
+        updatedItems[oldItemIndex] = item;
+        this.items = updatedItems;
+        this.itemsUpdated.next([...this.items]);
+      });
   }
 
   deleteItem(itemId: string) {

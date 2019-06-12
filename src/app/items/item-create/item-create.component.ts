@@ -23,18 +23,29 @@ ngOnInit() {
     if (paramMap.has('itemId')) {
         this.mode = 'edit';
         this.itemId = paramMap.get('itemId');
-        this.item = this.itemsService.getItem(this.itemId);
+        this.itemsService.getItem(this.itemId).subscribe(itemData => {
+          this.item = {id: itemData._id, title: itemData.title, content: itemData.content};
+        });
     } else {
         this.mode = 'create';
         this.itemId = null;
     }
   });
 }
-  onAddItem(form: NgForm) {
+  onSaveItem(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    this.itemsService.addItems(form.value.title, form.value.content);
+    if (this.mode === 'create') {
+      this.itemsService.addItems(form.value.title, form.value.content);
+    } else {
+      this.itemsService.updateItem(
+        this.itemId,
+        form.value.title,
+        form.value.content
+      );
+    }
     form.resetForm();
   }
+
 }
