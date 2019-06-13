@@ -29,6 +29,11 @@ router.put(':id', (req, res, next) => {
 });
 
 router.get("", (req, res, next) => {
+  const pageSize = req.query.pageSize;
+  const currentPage = req.query.page;
+  if (pageSize && currentPage) {
+    
+  }
   Item.find().then(documents => {
     res.status(200).json({
       message: 'Leilões resposta sucess',
