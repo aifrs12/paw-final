@@ -10,4 +10,10 @@
     </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
+<mat-paginator [length]="100"
+[pageSize]="10"
+[pageSizeOptions]="[5, 10, 25, 100]"
+(page)="onChangedPage($event)"
+></mat-paginator>
 <p class="info-text mat-body-1" *ngIf="items.length <= 0">Não existem leilões ativos.</p>
+

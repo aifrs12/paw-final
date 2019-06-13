@@ -11,6 +11,7 @@ import { ItemListComponent } from './items/item-list/item-list.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
+import { MatPaginatorModule } from '@angular/material';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { LoginComponent } from './auth/login/login.component';
     MatButtonModule,
     MatToolbarModule,
     MatExpansionModule,
+    MatPaginatorModule,
     HttpClientModule
   ],
   providers: [],

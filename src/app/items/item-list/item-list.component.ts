@@ -4,6 +4,8 @@ import { Subscription } from 'rxjs';
 import { Item } from '../item.model';
 import { ItemsService } from '../items.service';
 
+import { PageEvent } from '@angular/material';
+
 @Component({
   selector: 'app-item-list',
   templateUrl: './item-list.component.html',
@@ -22,12 +24,20 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   constructor(public itemsService: ItemsService) {}
 
+  totalItems = 10;
+  itemsPerPpage = 2;
+  pageSizeOptions = [1 , 2 , 5 , 10];
+
   ngOnInit() {
     this.itemsService.getItems();
     this.itemsSub = this.itemsService.getItemUpdateListener()
     .subscribe((items: Item[]) => {
       this.items = items;
     });
+  }
+
+  onChangedPage(pageData: PageEvent) {
+    console.log(pageData);
   }
 
   onDelete(itemId: string) {
