@@ -4,7 +4,7 @@ const Item = require("../models/item");
 
 const router = express.Router();
 
-router.post('', (req, res, next) => {
+router.item("", (req, res, next) => {
   const item = new Item({
     title: req.body.title,
     content: req.body.content
@@ -28,16 +28,12 @@ router.put(':id', (req, res, next) => {
   });
 });
 
-<<<<<<< HEAD
 router.get("", (req, res, next) => {
   const pageSize = req.query.pageSize;
   const currentPage = req.query.page;
   if (pageSize && currentPage) {
     
   }
-=======
-router.get('', (req, res, next) => {
->>>>>>> d5951009eb8c97b3c0dc430efa485d9074e86ecd
   Item.find().then(documents => {
     res.status(200).json({
       message: 'Leilões resposta sucess',
@@ -46,7 +42,7 @@ router.get('', (req, res, next) => {
   });
 });
 
-router.get('/:id', (req, res, next) => {
+router.get("/:id", (req, res, next) => {
   Item.findById(req.params.id).then(item => {
     if (item) {
       res.status(200).json(item);
