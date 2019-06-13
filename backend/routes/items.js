@@ -4,7 +4,7 @@ const Item = require("../models/item");
 
 const router = express.Router();
 
-router.item("", (req, res, next) => {
+router.post('', (req, res, next) => {
   const item = new Item({
     title: req.body.title,
     content: req.body.content
@@ -28,7 +28,7 @@ router.put(':id', (req, res, next) => {
   });
 });
 
-router.get("", (req, res, next) => {
+router.get('', (req, res, next) => {
   Item.find().then(documents => {
     res.status(200).json({
       message: 'Leilões resposta sucess',
@@ -37,7 +37,7 @@ router.get("", (req, res, next) => {
   });
 });
 
-router.get("/:id", (req, res, next) => {
+router.get('/:id', (req, res, next) => {
   Item.findById(req.params.id).then(item => {
     if (item) {
       res.status(200).json(item);
