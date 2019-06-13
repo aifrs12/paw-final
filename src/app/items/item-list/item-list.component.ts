@@ -27,11 +27,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
   totalItems = 10;
   itemsPerPpage = 2;
   pageSizeOptions = [1 , 2 , 5 , 10];
-
+  isLoading = false;
   ngOnInit() {
+    this.isLoading = true;
     this.itemsService.getItems();
     this.itemsSub = this.itemsService.getItemUpdateListener()
     .subscribe((items: Item[]) => {
+      this.isLoading = false;
       this.items = items;
     });
   }

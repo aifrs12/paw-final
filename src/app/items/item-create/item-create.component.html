@@ -1,5 +1,6 @@
 <mat-card>
-  <form (submit)="onSaveItem(itemForm)" #itemForm="ngForm">
+  <mat-spinner *ngIf="isLoading"></mat-spinner>
+  <form (submit)="onSaveItem(itemForm)" #itemForm="ngForm" *ngIf="!isLoading">
     <mat-form-field>
       <input matInput type="text" name="title" [ngModel]="item?.title" required minlength="3" #title="ngModel" placeholder="Titulo">
       <mat-error *ngIf="title.invalid">O campo não pode estar vazio.</mat-error>
