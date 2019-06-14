@@ -1,5 +1,4 @@
-<mat-spinner *ngIf="isLoading"></mat-spinner>
-<mat-accordion multi="true" *ngIf="items.length > 0 && !isLoading">
+<mat-accordion multi="true" *ngIf="items.length > 0">
   <mat-expansion-panel *ngFor="let item of items">
     <mat-expansion-panel-header>
       {{ item.title }}
@@ -16,5 +15,5 @@
 [pageSizeOptions]="[5, 10, 25, 100]"
 (page)="onChangedPage($event)"
 ></mat-paginator>
-<p class="info-text mat-body-1" *ngIf="items.length <= 0 && !isLoading">Não existem leilões ativos.</p>
+<p class="info-text mat-body-1" *ngIf="items.length <= 0">Não existem leilões ativos.</p>
 

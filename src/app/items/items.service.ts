@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { Router } from '@angular/router';
+
 import { map } from 'rxjs/operators';
 
 import { Item } from './item.model';
@@ -12,7 +12,7 @@ export class ItemsService {
   private items: Item[] = [];
   private itemsUpdated = new Subject<Item[]>();
 
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient) {}
 
   getItems() {
     this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items/'
@@ -46,7 +46,6 @@ export class ItemsService {
       item.id = id;
       this.items.push(item);
       this.itemsUpdated.next([...this.items]);
-      this.router.navigate(['/']);
     });
   }
 
@@ -60,7 +59,6 @@ export class ItemsService {
         updatedItems[oldItemIndex] = item;
         this.items = updatedItems;
         this.itemsUpdated.next([...this.items]);
-        this.router.navigate(['/']);
       });
   }
 
