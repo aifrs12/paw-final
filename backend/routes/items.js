@@ -27,7 +27,15 @@ router.put('/:id', (req, res, next) => {
 });
 
 router.get('', (req, res, next) => {
-  Item.find().then(documents => {
+  const pageSize = +req.query.pagesize;
+  const currentPage = +req.query.page;
+  const itemQuery = Item.find();
+  if (pageSize && currentPage) {
+    itemQuery
+      .skip(pageSize * (currentPage - 1))
+      .limit(pageSize);
+  }
+  itemQuery.then(documents => {
     res.status(200).json({
       message: 'Leilões resposta sucess',
       items: documents
@@ -36,6 +44,7 @@ router.get('', (req, res, next) => {
 });
 
 router.get("/:id", (req, res, next) => {
+
   Item.findById(req.params.id).then(item => {
     if (item) {
       res.status(200).json(item);

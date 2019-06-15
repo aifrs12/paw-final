@@ -15,9 +15,9 @@ export class ItemsService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  getItems() {
-    this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items/'
-    )
+  getItems(itemsPerPage: number, currentPage: number) {
+    const queryParams = `?pagesize=${itemsPerPage}&page=${currentPage}`;
+    this.http.get<{message: string, items: any[]}>('http://localhost:3000/api/items/' + queryParams)
     .pipe(map((itemData) => {
       return itemData.items.map(item => {
         return {

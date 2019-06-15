@@ -25,12 +25,12 @@ export class ItemListComponent implements OnInit, OnDestroy {
   constructor(public itemsService: ItemsService) {}
 
   totalItems = 10;
-  itemsPerPpage = 2;
+  itemsPerPage = 5;
   pageSizeOptions = [1 , 2 , 5 , 10];
-
+  currentPage = 1;
   ngOnInit() {
     this.isLoading = true;
-    this.itemsService.getItems();
+    this.itemsService.getItems(this.itemsPerPage, 1);
     this.itemsSub = this.itemsService.getItemUpdateListener()
     .subscribe((items: Item[]) => {
       this.isLoading = false;
@@ -39,7 +39,10 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   onChangedPage(pageData: PageEvent) {
-    console.log(pageData);
+    this.isLoading = true;
+    this.currentPage = pageData.pageIndex + 1;
+    this.itemsPerPage = pageData.pageSize;
+    this.itemsService.getItems(this.itemsPerPage, this.currentPage);
   }
 
   onDelete(itemId: string) {
