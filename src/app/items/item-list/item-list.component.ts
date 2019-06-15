@@ -21,7 +21,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   items: Item[] = [];
   private itemsSub: Subscription;
-
+  isLoading = false;
   constructor(public itemsService: ItemsService) {}
 
   totalItems = 10;
@@ -29,9 +29,11 @@ export class ItemListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [1 , 2 , 5 , 10];
 
   ngOnInit() {
+    this.isLoading = true;
     this.itemsService.getItems();
     this.itemsSub = this.itemsService.getItemUpdateListener()
     .subscribe((items: Item[]) => {
+      this.isLoading = false;
       this.items = items;
     });
   }

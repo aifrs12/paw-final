@@ -12,6 +12,7 @@ import { ItemsService } from '../items.service';
 export class ItemCreateComponent implements OnInit {
   enteredTitle = '';
   enteredContent = '';
+  isLoading = false;
   item: Item;
   private mode = 'create';
   private itemId: string;
@@ -23,7 +24,9 @@ ngOnInit() {
     if (paramMap.has('itemId')) {
         this.mode = 'edit';
         this.itemId = paramMap.get('itemId');
+        this.isLoading = true;
         this.itemsService.getItem(this.itemId).subscribe(itemData => {
+          this.isLoading = false;
           this.item = {id: itemData._id, title: itemData.title, content: itemData.content};
         });
     } else {
@@ -36,6 +39,7 @@ ngOnInit() {
     if (form.invalid) {
       return;
     }
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.itemsService.addItems(form.value.title, form.value.content);
     } else {
