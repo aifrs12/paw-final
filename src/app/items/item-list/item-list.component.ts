@@ -4,7 +4,8 @@ import { Subscription } from 'rxjs';
 import { Item } from '../item.model';
 import { ItemsService } from '../items.service';
 
-import { PageEvent } from '@angular/material';
+import { PageEvent, getMatIconFailedToSanitizeUrlError } from '@angular/material';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-item-list',
@@ -12,22 +13,19 @@ import { PageEvent } from '@angular/material';
   styleUrls: ['./item-list.component.css']
 })
 export class ItemListComponent implements OnInit, OnDestroy {
- /* items = [
-    {title: 'Leilão numero 1', content: 'Este é o Leilão numero 1'},
-    {title: 'Leilão numero 2', content: 'Este é o Leilão numero 2'},
-    {title: 'Leilão numero 3', content: 'Este é o Leilão numero 3'},
-  ]
-  */
 
   items: Item[] = [];
-  private itemsSub: Subscription;
   isLoading = false;
-  constructor(public itemsService: ItemsService) {}
-
   totalItems = 10;
   itemsPerPage = 5;
-  pageSizeOptions = [1 , 2 , 5 , 10];
   currentPage = 1;
+  pageSizeOptions = [1 , 2 , 5 , 10];
+  userIsAutenticated = false;
+  private itemsSub: Subscription;
+  private authStatusSub: Subscription;
+
+  constructor(public itemsService: ItemsService, private authService : AuthService) {}
+
   ngOnInit() {
     this.isLoading = true;
     this.itemsService.getItems(this.itemsPerPage, 1);
@@ -35,6 +33,11 @@ export class ItemListComponent implements OnInit, OnDestroy {
     .subscribe((items: Item[]) => {
       this.isLoading = false;
       this.items = items;
+    });
+    this.userIsAutenticated = this.authService.getIsAuth();
+    this.authStatusSub = this.authService.getAuthStatusListener()
+    .subscribe(isAutenticated => {
+      this.userIsAutenticated = isAutenticated;
     });
   }
 
@@ -51,6 +54,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.itemsSub.unsubscribe();
+    this.authStatusSub.unsubscribe();
   }
 
 }

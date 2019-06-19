@@ -5,7 +5,7 @@
       {{ item.title }}
     </mat-expansion-panel-header>
     <p>{{ item.content }}</p>
-    <mat-action-row>
+    <mat-action-row *ngIf='userIsAutenticated'>
       <a mat-button [routerLink]="['/edit', item.id]">EDITAR</a>
       <button mat-button (click)="onDelete(item.id)">ELIMINAR</button>
     </mat-action-row>

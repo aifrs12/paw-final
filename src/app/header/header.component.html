@@ -4,14 +4,17 @@
   </span>
   <span class="space"></span>
     <ul>
-      <li>
+      <li *ngIf='UserIsAuthenticated'>
         <a mat-button routerLink="/create" routerLinkActive="primary">Criar Leilão</a>
       </li>
-      <li>
+      <li *ngIf='!UserIsAuthenticated'>
           <a mat-button routerLink="/login" routerLinkActive="primary">Login</a>
         </li>
-        <li>
+        <li *ngIf='!UserIsAuthenticated'>
             <a mat-button routerLink="/signup" routerLinkActive="primary">Registar</a>
+          </li>
+          <li *ngIf='UserIsAuthenticated'>
+            <button mat-button>Logout</button>
           </li>
    </ul>
 </mat-toolbar>
