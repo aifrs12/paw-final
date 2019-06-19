@@ -1,5 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const User = require('../models/user');
 
@@ -43,6 +44,9 @@ router.post('/login', (req, res, next) => {
         message: 'Auth Failed!'
       })
     }
+    const token = jwt.sign({ email: user.email, userId: user._id },
+      'L^L^gdw?xc@WMZ&}8,A6c~sU4-',
+      {expiresIn: '2h' });
   })
   .catch(err => {
     return res.status(401).json({
