@@ -24,7 +24,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private itemsSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public itemsService: ItemsService, private authService : AuthService) {}
+  constructor(public itemsService: ItemsService, private authService: AuthService) {}
 
   ngOnInit() {
     this.isLoading = true;
