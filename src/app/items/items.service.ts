@@ -23,12 +23,16 @@ export class ItemsService {
       map((itemData) => {
       return {items: itemData.items.map(item => {
         return {
-          title: item.title, content: item.content, id: item._id
+          title: item.title,
+          content: item.content,
+          id: item._id,
+          creator: item.creator
         };
       }), maxItems: itemData.maxItems};
     })
     )
     .subscribe((tansformedItemData) => {
+      console.log(tansformedItemData);
       this.items = tansformedItemData.items;
       this.itemsUpdated.next({
         items: [...this.items],
