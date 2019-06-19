@@ -5,6 +5,10 @@ ul {
 
 }
 
+ul {
+  display: flex;
+}
+
 a {
   text-decoration-color: none;
   color: white;
