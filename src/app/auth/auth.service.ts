@@ -38,7 +38,7 @@ export class AuthService {
     .subscribe(response => {
       const token = response.token;
       this.token = token;
-      if(token) {
+      if (token) {
         this.isAutenticated = true;
         this.authStatusListener.next(true);
         this.router.navigate(['/']);
