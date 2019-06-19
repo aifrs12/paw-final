@@ -16,7 +16,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
 
   items: Item[] = [];
   isLoading = false;
-  totalItems = 10;
+  totalItems = 0;
   itemsPerPage = 5;
   currentPage = 1;
   pageSizeOptions = [1 , 2 , 5 , 10];
@@ -24,15 +24,17 @@ export class ItemListComponent implements OnInit, OnDestroy {
   private itemsSub: Subscription;
   private authStatusSub: Subscription;
 
-  constructor(public itemsService: ItemsService, private authService : AuthService) {}
+  constructor(public itemsService: ItemsService, private authService: AuthService) {}
 
   ngOnInit() {
     this.isLoading = true;
     this.itemsService.getItems(this.itemsPerPage, 1);
-    this.itemsSub = this.itemsService.getItemUpdateListener()
-    .subscribe((items: Item[]) => {
+    this.itemsSub = this.itemsService
+    .getItemUpdateListener()
+    .subscribe((itemData: {items: Item[], itemCount: number}) => {
       this.isLoading = false;
-      this.items = items;
+      this.totalItems = itemData.itemCount;
+      this.items = itemData.items;
     });
     this.userIsAutenticated = this.authService.getIsAuth();
     this.authStatusSub = this.authService.getAuthStatusListener()
@@ -49,7 +51,9 @@ export class ItemListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(itemId: string) {
-    this.itemsService.deleteItem(itemId);
+    this.itemsService.deleteItem(itemId).subscribe(() => {
+      this.itemsService.getItems(this.itemsPerPage, this.currentPage);
+    });
   }
 
   ngOnDestroy() {
