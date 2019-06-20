@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormGroup , FormControl , Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Item } from '../item.model';
 import { ItemsService } from '../items.service';
@@ -14,12 +14,19 @@ export class ItemCreateComponent implements OnInit {
   enteredContent = '';
   isLoading = false;
   item: Item;
+  form: FormGroup;
   private mode = 'create';
   private itemId: string;
 
 constructor(public itemsService: ItemsService, public route: ActivatedRoute) {}
 
 ngOnInit() {
+  this.form = new FormGroup({
+    title: new FormControl(null, {
+      validators: [Validators.required, Validators.minLength(3)]
+    }),
+    content:  new FormControl(null, {validators: [Validators.required]})
+  });
   this.route.paramMap.subscribe((paramMap: ParamMap) => {
     if (paramMap.has('itemId')) {
         this.mode = 'edit';
@@ -29,27 +36,31 @@ ngOnInit() {
           this.isLoading = false;
           this.item = {id: itemData._id, title: itemData.title, content: itemData.content};
         });
+        this.form.setValue({
+          title: this.item.title,
+          content: this.item.content}
+          );
     } else {
         this.mode = 'create';
         this.itemId = null;
     }
   });
 }
-  onSaveItem(form: NgForm) {
-    if (form.invalid) {
+  onSaveItem() {
+    if (this.form.invalid) {
       return;
     }
     this.isLoading = true;
     if (this.mode === 'create') {
-      this.itemsService.addItems(form.value.title, form.value.content);
+      this.itemsService.addItems(this.form.value.title, this.form.value.content);
     } else {
       this.itemsService.updateItem(
         this.itemId,
-        form.value.title,
-        form.value.content
+        this.form.value.title,
+        this.form.value.content
       );
     }
-    form.resetForm();
+    this.form.reset();
   }
 
 }
