@@ -7,7 +7,8 @@ const checkAuth = require('../middleware/check-auth');
 router.post('', checkAuth, (req, res, next) => {
   const item = new Item({
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    // creator: req.userData.userId
   });
   item.save().then(createdItem => {
     res.status(201).json({
@@ -28,28 +29,28 @@ router.put('/:id', checkAuth, (req, res, next) => {
   });
 });
 
-router.get('', (req, res, next) => {
+router.get("", (req, res, next) => {
   const pageSize = +req.query.pagesize;
   const currentPage = +req.query.page;
   const itemQuery = Item.find();
   let fetchedItems;
   if (pageSize && currentPage) {
-    itemQuery
-      .skip(pageSize * (currentPage - 1))
-      .limit(pageSize);
+    itemQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
   }
-  itemQuery.then(documents => {
-    fetchedItems = documents;
-    return Item.count();
+  itemQuery
+    .then(documents => {
+      fetchedItems = documents;
+      return Item.count();
     })
     .then(count => {
       res.status(200).json({
-        message: 'Leilões resposta sucess',
+        message: "Items fetched successfully!",
         items: fetchedItems,
         maxItems: count
       });
     });
 });
+
 router.get("/:id", (req, res, next) => {
 
   Item.findById(req.params.id).then(item => {
