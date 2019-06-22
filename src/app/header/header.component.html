@@ -4,6 +4,9 @@
   </span>
   <span class="space"></span>
     <ul>
+        <li *ngIf='UserIsAuthenticated'>
+            <a mat-button routerLink="/listar" *ngIf="ifisAdmin()" routerLinkActive="primary">Ver Utilizadores</a>
+          </li>
       <li *ngIf='UserIsAuthenticated'>
         <a mat-button routerLink="/create" routerLinkActive="primary">Criar Leilão</a>
       </li>

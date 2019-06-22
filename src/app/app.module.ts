@@ -19,9 +19,11 @@ import { ItemListComponent } from './items/item-list/item-list.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { LoginComponent } from './auth/login/login.component';
+import { LancesCreateComponent } from './lances/lances-create.component';
 import { SignupComponent } from './auth/signup/signup.component';
 import { MatPaginatorModule } from '@angular/material';
 import { AuthInterceptor } from './auth/auth-interceptor';
+import { UserListComponent } from './users-list/users-list.component';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { AuthInterceptor } from './auth/auth-interceptor';
     ItemListComponent,
     HeaderComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    LancesCreateComponent,
+    UserListComponent
   ],
   imports: [
     BrowserModule,

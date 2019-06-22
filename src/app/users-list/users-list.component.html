@@ -1,0 +1,19 @@
+<mat-accordion multi="true" *ngIf="users.length > 0">
+    <h2>Listagem Utilizadores</h2>
+  <mat-expansion-panel *ngFor="let user of users">
+    <mat-expansion-panel-header>
+        {{ user.email }}
+    </mat-expansion-panel-header>
+    <h3>Dados:</h3>
+    <section>
+        <p> <b>Id: </b> {{ user.id }} </p>
+    </section>
+    <section>
+      <p> <b>Username: </b> {{ user.email }} </p>
+    </section>
+  <mat-action-row *ngIf="userIsAuth">
+      <button mat-button color="warn" (click)="onDelete(user.id)">DELETE</button>
+    </mat-action-row>
+  </mat-expansion-panel>
+</mat-accordion>
+<h2 class="info-text mat-body-3" *ngIf="(!(users.length > 0))"> Sem Utilizadores! </h2>

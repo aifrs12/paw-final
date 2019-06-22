@@ -58,6 +58,47 @@ router.post('/login', (req, res, next) => {
       messsagem: 'Auth Failed!'
     })
   });
-})
+});
+
+router.get('/listar', (req, res, next) => {
+  const userQuery = User.find({id: req.body.id});
+  let usersAdq;
+    userQuery
+    .then(documents => {
+      usersAdq = documents;
+      return User.countDocuments();
+    })
+    .then(count => {
+      res.status(200).json({
+        message: 'Users fetch com Sucesso',
+        users: usersAdq,
+        maxUsers: count
+    });
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'Erro fetch Users'
+    });
+  });
+});
+
+router.delete('/listar/:id', (req, res, next) => {
+  console.log(req.body.id);
+
+  User.deleteOne({id: req.body.id}).then(result => {
+    if (result.n > 0) {
+      res.status(200).json({
+        message: 'Utilizador deletado com Sucesso'});
+    } else {
+      res.status(401).json({
+        message: 'erro delete user'});
+    }
+  })
+  .catch(error => {
+    res.status(500).json({
+      message: 'erro delete user'
+    });
+  });
+});
 
 module.exports = router;

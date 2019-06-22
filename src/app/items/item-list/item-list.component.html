@@ -5,7 +5,27 @@
       {{ item.title }}
     </mat-expansion-panel-header>
     <p>{{ item.content }}</p>
+
+    <mat-expansion-panel *ngIf="lances.length > 0">
+        <mat-expansion-panel-header>
+          <p>Lances efetuados por:</p>
+        </mat-expansion-panel-header>
+
+        <mat-expansion-panel *ngFor="let lance of lances ">
+          <mat-expansion-panel-header>
+            <p>{{lance.user}}</p>
+          </mat-expansion-panel-header>
+
+          <section>
+            <p><b>Valor:{{lance.valor}}€</b></p>
+          </section>
+        </mat-expansion-panel>
+
+      </mat-expansion-panel>
+      <mat-card class="info-text mat-body-1" *ngIf="lances.length <= 0">Sem lances efetuados</mat-card>
+
     <mat-action-row *ngIf='userIsAutenticated'>
+      <button mat-button color="warn" [routerLink]="['/lance']" *ngIf="userIsAutenticated">Fazer Lance</button>
       <a mat-button [routerLink]="['/edit', item.id]">EDITAR</a>
       <button mat-button (click)="onDelete(item.id)">ELIMINAR</button>
     </mat-action-row>

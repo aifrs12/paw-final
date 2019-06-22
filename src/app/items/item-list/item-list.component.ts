@@ -1,11 +1,11 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-
 import { Item } from '../item.model';
 import { ItemsService } from '../items.service';
-
 import { PageEvent, getMatIconFailedToSanitizeUrlError } from '@angular/material';
 import { AuthService } from 'src/app/auth/auth.service';
+import { Lance } from '../../lances.model';
+import { LancesService } from '../../lances.service';
 
 @Component({
   selector: 'app-item-list',
@@ -23,8 +23,11 @@ export class ItemListComponent implements OnInit, OnDestroy {
   userIsAutenticated = false;
   private itemsSub: Subscription;
   private authStatusSub: Subscription;
+  lances: Lance[] = [];
+  private lanceSub: Subscription;
+  totalLances = 0;
 
-  constructor(public itemsService: ItemsService, private authService: AuthService) {}
+  constructor(public itemsService: ItemsService, private authService: AuthService, private lanceService: LancesService) {}
 
   ngOnInit() {
     this.isLoading = true;
@@ -41,6 +44,15 @@ export class ItemListComponent implements OnInit, OnDestroy {
     .subscribe(isAutenticated => {
       this.userIsAutenticated = isAutenticated;
     });
+    this.lanceService.getLances(this.itemsPerPage, this.currentPage);
+    this.lanceSub = this.lanceService
+      .getPostUpdateListener()
+      .subscribe(
+        (lanceData: { lances: Lance[]; lanceCount: number }) => {
+          this.totalLances = lanceData.lanceCount;
+          this.lances = lanceData.lances;
+        }
+      );
   }
 
   onChangedPage(pageData: PageEvent) {

@@ -1,0 +1,24 @@
+mat-form-field, textarea {
+  width: 100%;
+}
+
+.controlvalue{
+  width:25%;
+}
+.donation-margin {
+  margin: 0%;
+  width: 50%;
+  height: 1px;
+}
+#euroicon{
+  font-size:100%;
+}
+
+.donation-margi {
+  margin: 0%;
+  width: 10%;
+
+}
+.divson {
+  margin: 10px;
+}
