@@ -53,7 +53,7 @@ export class ItemsService {
   }
 
   addItems(title: string, content: string) {
-    const item: Item = { id: null, title, content };
+    const item: Item = { id: null, title, content, creator: null };
     this.http.post<{message: string, itemId: string}>('http://localhost:3000/api/items/', item)
     .subscribe((responseData) => {
       this.router.navigate(['/']);

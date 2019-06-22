@@ -78,7 +78,7 @@ export class AuthService {
   autoAuthUser() {
     const authInformation = this.getAuthData();
     if (!authInformation) {
-      this.router.navigate(['/list-campanha']);
+      this.router.navigate(['/']);
       return;
     }
     const now = new Date();
@@ -87,13 +87,13 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAutenticated = true;
       this.userId = authInformation.userId;
-      if (this.userId === '5d0e717baade0117e2ca8e49') {
+      if (this.userId === '5d0e851dc73ce2225948d512') {
         this.admin = true;
         this.authStatusListener.next(true);
       }
       this.authStatusListener.next(true);
     } else {
-      this.router.navigate(['/list-campanha']);
+      this.router.navigate(['/']);
     }
   }
 
@@ -109,7 +109,7 @@ export class AuthService {
         this.userId = response.userId;
         this.authStatusListener.next(true);
         this.saveAuthenticationData(token, this.userId);
-        if (this.userId === '5d0e717baade0117e2ca8e49') {
+        if (this.userId === '5d0e851dc73ce2225948d512') {
           this.admin = true;
           this.router.navigate(['/']);
         } else {
@@ -127,12 +127,6 @@ export class AuthService {
   private saveAuthenticationData(token: string, userId: string) {
     localStorage.setItem('token', token);
     localStorage.setItem('userId', userId);
-  }
-
-  private clearAuthenticationData() {
-    localStorage.removeItem('token');
-    localStorage.removeItem('expiration');
-    localStorage.removeItem('userId');
   }
 
   private getAuthData() {
