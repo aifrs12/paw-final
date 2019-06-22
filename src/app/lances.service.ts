@@ -72,8 +72,6 @@ export class LancesService {
       user,
       valor,
       estado,
-     // creator : null
-
 
     };
     console.log(lance);
