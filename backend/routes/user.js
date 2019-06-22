@@ -50,7 +50,8 @@ router.post('/login', (req, res, next) => {
       'L^L^gdw?xc@WMZ&}8,A6c~sU4-',
       {expiresIn: '2h' });
       res.status(200).json({
-        token: token
+        token: token,
+        userId: fetchedUser._id
       });
   })
   .catch(err => {

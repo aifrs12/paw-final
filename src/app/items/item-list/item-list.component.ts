@@ -21,6 +21,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   currentPage = 1;
   pageSizeOptions = [1 , 2 , 5 , 10];
   userIsAutenticated = false;
+  userId: string;
   private itemsSub: Subscription;
   private authStatusSub: Subscription;
   lances: Lance[] = [];
@@ -32,6 +33,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
     this.itemsService.getItems(this.itemsPerPage, 1);
+    this.userId = this.authService.getUserId();
     this.itemsSub = this.itemsService
     .getItemUpdateListener()
     .subscribe((itemData: {items: Item[], itemCount: number}) => {
@@ -43,6 +45,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
     this.authStatusSub = this.authService.getAuthStatusListener()
     .subscribe(isAutenticated => {
       this.userIsAutenticated = isAutenticated;
+      this.userId = this.authService.getUserId();
     });
     this.lanceService.getLances(this.itemsPerPage, this.currentPage);
     this.lanceSub = this.lanceService

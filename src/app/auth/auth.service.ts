@@ -11,7 +11,7 @@ export class AuthService {
   private isAutenticated = false;
   private token: string;
   private authStatusListener = new Subject<boolean>();
-  private userid: string;
+  private userId: string;
   admin = false;
 
   private users: User[] = [];
@@ -25,7 +25,7 @@ export class AuthService {
   }
 
   getUserId() {
-    return this.userid;
+    return this.userId;
   }
 
   getToken() {
@@ -75,19 +75,41 @@ export class AuthService {
     return this.usersUpdated.asObservable();
   }
 
+  autoAuthUser() {
+    const authInformation = this.getAuthData();
+    if (!authInformation) {
+      this.router.navigate(['/list-campanha']);
+      return;
+    }
+    const now = new Date();
+    const expiresIn = authInformation.expirationDate.getTime() - now.getTime();
+    if (expiresIn > 0) {
+      this.token = authInformation.token;
+      this.isAutenticated = true;
+      this.userId = authInformation.userId;
+      if (this.userId === '5d0e717baade0117e2ca8e49') {
+        this.admin = true;
+        this.authStatusListener.next(true);
+      }
+      this.authStatusListener.next(true);
+    } else {
+      this.router.navigate(['/list-campanha']);
+    }
+  }
+
   login(email: string, password: string) {
     const authData: AuthData = {email, password};
-    this.http.post<{token: string, userid: string}>('http://localhost:3000/api/user/login/', authData)
+    this.http.post<{token: string, userid: string, userId: string}>('http://localhost:3000/api/user/login/', authData)
     .subscribe(response => {
       const token = response.token;
       this.token = token;
       this.getUsers();
       if (token) {
         this.isAutenticated = true;
-        this.userid = response.userid;
+        this.userId = response.userId;
         this.authStatusListener.next(true);
-        this.saveAuthenticationData(token, this.userid);
-        if (this.userid === '5d0e717baade0117e2ca8e49') {
+        this.saveAuthenticationData(token, this.userId);
+        if (this.userId === '5d0e717baade0117e2ca8e49') {
           this.admin = true;
           this.router.navigate(['/']);
         } else {
@@ -104,13 +126,36 @@ export class AuthService {
 
   private saveAuthenticationData(token: string, userId: string) {
     localStorage.setItem('token', token);
-    localStorage.setItem('userid', userId);
+    localStorage.setItem('userId', userId);
+  }
+
+  private clearAuthenticationData() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('expiration');
+    localStorage.removeItem('userId');
+  }
+
+  private getAuthData() {
+    const token = localStorage.getItem('token');
+    const expirationDate = localStorage.getItem('expiration');
+    const userId = localStorage.getItem('userId');
+    if (!token && !expirationDate) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    return {
+      token,
+      expirationDate: new Date(expirationDate),
+      userId
+    };
   }
 
   logout() {
     this.token = null;
     this.isAutenticated = false;
     this.authStatusListener.next(false);
+    this.userId = null;
+    this.admin = false;
     this.router.navigate(['/']);
   }
 

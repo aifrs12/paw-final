@@ -22,7 +22,8 @@ router.put('/:id', checkAuth, (req, res, next) => {
   const item = new Item({
     _id: req.body.id,
     title: req.body.title,
-    content: req.body.content
+    content: req.body.content,
+    creator: req.userInfo.userId
   });
   Item.updateOne({ _id: req.params.id, creator: req.userInfo.userId }, item).then(result => {
     if (result.nModified > 0) {

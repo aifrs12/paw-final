@@ -27,7 +27,7 @@ ngOnInit() {
         this.isLoading = true;
         this.itemsService.getItem(this.itemId).subscribe(itemData => {
           this.isLoading = false;
-          this.item = {id: itemData._id, title: itemData.title, content: itemData.content};
+          this.item = {id: itemData._id, title: itemData.title, content: itemData.content, creator: itemData.creator};
         });
     } else {
         this.mode = 'create';

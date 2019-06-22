@@ -49,7 +49,7 @@ export class ItemsService {
   }
 
   getItem(id: string) {
-    return this.http.get<{_id: string, title: string, content: string}>('http://localhost:3000/api/items/' + id);
+    return this.http.get<{_id: string, title: string, content: string, creator: string}>('http://localhost:3000/api/items/' + id);
   }
 
   addItems(title: string, content: string) {
@@ -61,7 +61,7 @@ export class ItemsService {
   }
 
   updateItem(id: string, title: string, content: string) {
-    const item: Item = { id, title, content };
+    const item: Item = { id, title, content, creator: null };
     this.http
       .put('http://localhost:3000/api/items/' + id, item)
       .subscribe(response => {
