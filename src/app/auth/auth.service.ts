@@ -87,7 +87,7 @@ export class AuthService {
       this.token = authInformation.token;
       this.isAutenticated = true;
       this.userId = authInformation.userId;
-      if (this.userId === '5d0e851dc73ce2225948d512') {
+      if (this.userId === '5d0e871bc73ce2225948d51b') {
         this.admin = true;
         this.authStatusListener.next(true);
       }
@@ -109,7 +109,7 @@ export class AuthService {
         this.userId = response.userId;
         this.authStatusListener.next(true);
         this.saveAuthenticationData(token, this.userId);
-        if (this.userId === '5d0e851dc73ce2225948d512') {
+        if (this.userId === '5d0e871bc73ce2225948d51b') {
           this.admin = true;
           this.router.navigate(['/']);
         } else {
