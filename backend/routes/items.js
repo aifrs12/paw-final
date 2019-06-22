@@ -8,7 +8,7 @@ router.post('', checkAuth, (req, res, next) => {
   const item = new Item({
     title: req.body.title,
     content: req.body.content,
-    // creator: req.userData.userId
+    creator: req.userInfo.userId
   });
   item.save().then(createdItem => {
     res.status(201).json({
@@ -24,8 +24,12 @@ router.put('/:id', checkAuth, (req, res, next) => {
     title: req.body.title,
     content: req.body.content
   });
-  Item.updateOne({ _id: req.params.id }, item).then(result => {
-    res.status(200).json({ message: "Update successful!" });
+  Item.updateOne({ _id: req.params.id, creator: req.userInfo.userId }, item).then(result => {
+    if (result.nModified > 0) {
+      res.status(200).json({ message: 'Update sucess!' });
+    } else {
+      res.status(401).json({ message: 'Update not authorized!' });
+    }
   });
 });
 
@@ -63,9 +67,13 @@ router.get("/:id", (req, res, next) => {
 });
 
 router.delete('/:id', checkAuth, (req, res, next) => {
-  Item.deleteOne({_id: req.params.id}).then(result => {
+  Item.deleteOne({_id: req.params.id, creator: req.userInfo.userId }).then(result => {
     console.log(result);
-    res.status(200).json({ message: 'Leilão apagado' });
+    if (result.n > 0) {
+      res.status(200).json({ message: 'Delete sucess!' });
+    } else {
+      res.status(401).json({ message: 'Delete not authorized!' });
+    }
   });
 });
 

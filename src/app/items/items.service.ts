@@ -28,7 +28,7 @@ export class ItemsService {
                 title: item.title,
                 content: item.content,
                 id: item._id,
-                // creator: item.creator
+                creator: item.creator
               };
             }),
             maxItems: itemData.maxItems
@@ -36,7 +36,6 @@ export class ItemsService {
         })
       )
       .subscribe(transformedItemData => {
-        console.log(transformedItemData);
         this.items = transformedItemData.items;
         this.itemsUpdated.next({
           items: [...this.items],
