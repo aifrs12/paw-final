@@ -26,6 +26,10 @@
       <a mat-button [routerLink]="['/edit', item.id]">EDITAR</a>
       <button mat-button (click)="onDelete(item.id)">ELIMINAR</button>
     </mat-action-row>
+    <mat-action-row *ngIf="ifisAdmin()">
+      <a mat-button [routerLink]="['/edit', item.id]">EDITAR</a>
+      <button mat-button (click)="onDelete(item.id)">ELIMINAR</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <mat-paginator [length]="totalItems"

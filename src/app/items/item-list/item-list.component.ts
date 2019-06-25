@@ -27,6 +27,7 @@ export class ItemListComponent implements OnInit, OnDestroy {
   lances: Lance[] = [];
   private lanceSub: Subscription;
   totalLances = 0;
+  private admin: boolean;
 
   constructor(public itemsService: ItemsService, private authService: AuthService, private lanceService: LancesService) {}
 
@@ -74,6 +75,13 @@ export class ItemListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.itemsSub.unsubscribe();
     this.authStatusSub.unsubscribe();
+  }
+
+  ifisAdmin() {
+    if (this.authService.getIfisAdmin()) {
+      this.admin = true;
+      return this.admin;
+    }
   }
 
 }
